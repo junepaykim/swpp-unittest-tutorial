@@ -97,7 +97,7 @@ describe('ActionCreators', () => {
         });
       })
 
-    store.dispatch(actionCreators.postTodo()).then(() => {
+    store.dispatch(actionCreators.postTodo(stubTodo)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
