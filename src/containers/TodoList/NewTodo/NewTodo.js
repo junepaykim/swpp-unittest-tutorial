@@ -10,10 +10,27 @@ class NewTodo extends Component {
   state = {
     title: '',
     content: '',
+    dueDate: {
+      year: '',
+      month: '',
+      date: '',
+    },
+  }
+
+  componentDidMount() {
+    const now = new Date();
+    this.setState({
+      ...this.state,
+      dueDate: {
+        year: now.getFullYear(),
+        month: now.getMonth() + 1,
+        date: now.getDate(),
+      },
+    })
   }
 
   postTodoHandler = () => {
-    this.props.onStoreTodo(this.state.title, this.state.content);
+    this.props.onStoreTodo(this.state.title, this.state.content, this.state.dueDate);
   }
 
   render() {
@@ -31,6 +48,28 @@ class NewTodo extends Component {
           onChange={(event) => this.setState({ content: event.target.value })}
         >
         </textarea>
+        <label>Due Date</label>
+        year <input
+          type="text"
+          value={this.state.dueDate.year}
+          onChange={(event) => this.setState({
+            dueDate: {...this.state.dueDate, year: event.target.value }
+          })}
+        ></input>
+        month <input
+          type="text"
+          value={this.state.dueDate.month}
+          onChange={(event) => this.setState({
+            dueDate: {...this.state.dueDate, month: event.target.value }
+          })}
+        ></input>
+        date <input
+          type="text"
+          value={this.state.dueDate.date}
+          onChange={(event) => this.setState({
+            dueDate: {...this.state.dueDate, date: event.target.value }
+          })}
+        ></input>
         <button onClick={() => this.postTodoHandler()}>Submit</button>
       </div>
     );
@@ -39,8 +78,8 @@ class NewTodo extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onStoreTodo: (title, content) =>
-      dispatch(actionCreators.postTodo({ title: title, content: content })),
+    onStoreTodo: (title, content, dueDate) =>
+      dispatch(actionCreators.postTodo({ title: title, content: content, dueDate: dueDate})),
   }
 };
 

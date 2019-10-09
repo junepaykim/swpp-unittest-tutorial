@@ -20,6 +20,9 @@ def index(request, id=None):
                         'id': todo.id,
                         'title': todo.title,
                         'content': todo.content,
+                        'year': todo.year,
+                        'month': todo.month,
+                        'date': todo.date,
                         'done': todo.done,
                         }
                 return JsonResponse(response_dict, safe=False)
@@ -30,14 +33,20 @@ def index(request, id=None):
             body = request.body.decode()
             title = json.loads(body)['title']
             content = json.loads(body)['content']
+            dueDate = json.loads(body)['dueDate']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        todo = Todo(title=title, content=content, done=False)
+        todo = Todo(title=title, content=content,
+                year=dueDate['year'], month=dueDate['month'],
+                date=dueDate['date'], done=False)
         todo.save()
         response_dict = {
             'id': todo.id,
             'title': todo.title,
             'content': todo.content,
+            'year': todo.year,
+            'month': todo.month,
+            'date': todo.date,
             'done': todo.done,
         }
         return HttpResponse(json.dumps(response_dict), status=201)

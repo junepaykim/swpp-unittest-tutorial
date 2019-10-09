@@ -27,6 +27,9 @@ class TodoList extends Component {
           key={td.id}
           title={td.title}
           done={td.done}
+          year={td.year}
+          month={td.month}
+          date={td.date}
           clickDetail={() => this.clickTodoHandler(td)}
           clickDone={() => this.props.onToggleTodo(td.id)}
           clickDelete={() => this.props.onDeleteTodo(td.id)}
@@ -35,12 +38,15 @@ class TodoList extends Component {
     });
 
     return (
-      <div className="TodoList">
-        <div className='title'>
-          {this.props.title}
+      <div>
+        <div><NavLink to='/calendar' exact>See Calendar</NavLink></div>
+        <div className="TodoList">
+          <div className='title'>
+            {this.props.title}
+          </div>
+          {todos}
+          <NavLink to='/new-todo' exact>New Todo</NavLink>
         </div>
-        {todos}
-        <NavLink to='/new-todo' exact>New Todo</NavLink>
       </div>
     )
   }
