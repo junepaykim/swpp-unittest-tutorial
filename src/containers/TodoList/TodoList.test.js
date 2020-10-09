@@ -55,9 +55,9 @@ describe('<TodoList />', () => {
     const component = mount(todoList);
     const wrapper = component.find('.spyTodo');
     expect(wrapper.length).toBe(3);
-    expect(wrapper.at(0).text()).toBe('TODO_TEST_TITLE_1');
-    expect(wrapper.at(1).text()).toBe('TODO_TEST_TITLE_2');
-    expect(wrapper.at(2).text()).toBe('TODO_TEST_TITLE_3');
+    expect(wrapper.at(0).text()).toEqual('TODO_TEST_TITLE_1');
+    expect(wrapper.at(1).text()).toEqual('TODO_TEST_TITLE_2');
+    expect(wrapper.at(2).text()).toEqual('TODO_TEST_TITLE_3');
     expect(spyGetTodos).toBeCalledTimes(1);
   });
 

@@ -1,7 +1,7 @@
 export {
-  getTodos,
-  postTodo,
-  deleteTodo,
-  toggleTodo,
-  getTodo
-} from './todo';
+    getTodos,
+    postTodo,
+    deleteTodo,
+    toggleTodo,
+    getTodo
+  } from './todo';
