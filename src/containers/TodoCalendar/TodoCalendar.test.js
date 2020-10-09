@@ -121,6 +121,8 @@ describe('<TodoCalendar />', () => {
     expect(TodoCalendarInstance.state.year).toEqual(2020);
     expect(TodoCalendarInstance.state.month).toEqual(1);
     wrapper.simulate('click');
+
+    
   });
 
   it(`have good 'clickDone'`, () => {
