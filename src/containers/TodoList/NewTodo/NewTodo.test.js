@@ -3,12 +3,10 @@ import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { connectRouter, ConnectedRouter } from 'connected-react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
-
 import NewTodo from './NewTodo';
 import { getMockStore } from '../../../test-utils/mocks';
 import { history } from '../../../store/store';
 import * as actionCreators from '../../../store/actions/todo';
-
 const stubInitialState = {
   todos: [
     {id: 1, title: 'TODO_TEST_TITLE_1', done: false},
@@ -17,12 +15,9 @@ const stubInitialState = {
   ],
   selectedTodo: null,
 };
-
 const mockStore = getMockStore(stubInitialState);
-
 describe('<NewTodo />', () => {
   let newTodo;
-
   beforeEach(() => {
     newTodo = (
       <Provider store={mockStore}>
@@ -34,13 +29,11 @@ describe('<NewTodo />', () => {
       </Provider>
     );
   })
-
   it('should render NewTodo', () => {
     const component = mount(newTodo);
     const wrapper = component.find('.NewTodo');
     expect(wrapper.length).toBe(1);
   });
-
   it(`should call 'postTodo'`, () => {
     const spyPostTodo = jest.spyOn(actionCreators, 'postTodo')
       .mockImplementation(td => { return dispatch => {}; });
@@ -53,13 +46,13 @@ describe('<NewTodo />', () => {
   it(`should set state properly on title input`, () => {
     const title = 'TEST_TITLE'
     const component = mount(newTodo);
-    const wrapper = component.find('input');
-    wrapper.simulate('change', { target: { value: title } });
+    //const wrapper = component.find('input').first();
+    //wrapper.simulate('change', { target: { value: title } });
+    const wrapper = component.find('#title');    wrapper.simulate('change', { target: { value: title } });
     const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
     expect(newTodoInstance.state.title).toEqual(title);
     expect(newTodoInstance.state.content).toEqual('');
   });
-
   it(`should set state properly on content input`, () => {
     const content = 'TEST_CONTENT'
     const component = mount(newTodo);
@@ -69,6 +62,31 @@ describe('<NewTodo />', () => {
     expect(newTodoInstance.state.title).toEqual('');
     expect(newTodoInstance.state.content).toEqual(content);
   });
+
+  it(`should set state properly by year`, () => {
+    const year = 'TM';
+    const component = mount(newTodo);
+    const wrapper = component.find('#year');
+    wrapper.simulate('change', {target: {value: year}});
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    expect(newTodoInstance.state.dueDate.year).toEqual(year);
+  });
+
+  it(`should set state properly by month`, () => {
+    const month = 'TM';
+    const component = mount(newTodo);
+    const wrapper = component.find('#month');
+    wrapper.simulate('change', {target: {value: month}});
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    expect(newTodoInstance.state.dueDate.month).toEqual(month);
+  });
+
+  it(`should set state properly by date`, () => {
+    const date = 'TD';
+    const component = mount(newTodo);
+    const wrapper = component.find('#date');
+    wrapper.simulate('change', {target: {value: date}});
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    expect(newTodoInstance.state.dueDate.date).toEqual(date);
+  })
 });
-
-
